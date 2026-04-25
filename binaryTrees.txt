@@ -1,393 +1,210 @@
-Practice Problems:
-1. Given an array of integer and a number K, rotate the array to the right by K steps.
-   arr = [1,2,3,4,5]
-   K = 2
+1. Traversal-based questions
+Print inorder traversal
+8 connect to 4 and 12. 12 connect to 10 and 14.
 
- Output
-1st step: [5,1,2,3,4]
-2nd step: [4,5,1,2,3]
-expected result: [4,5,1,2,3]
+In-order means print is in between left and right.
+Pre-order means print is before left and right
+Post-order means print after left and right.
 
-Code:
+class Node:
+	def __init__(self, val):
+	  self.val = val
+ 	  self.left = None
+	  self.right = None
+	def inorder(node):
+	  if node is None:
+		return
+	  inorder(node.left)
+	  print(node.val, end=" ")
+	  inorder(node.right)
 
-def shift_right(str1, steps):
-    #J explain how many steps it need to rotate
-    j = 0
-    shift = 0
-    while j < steps:
+root = Node(8)
+root.left = Node(4)
+root.right = Node(12)
+root.right.left = Node(10)
+root.right.right = Node(14)
+inorder(root)
 
-        #assign last list value to the first
-        shift = [str1[-1]]
+Level order traversal (using queue)
+Spiral (zigzag) traversal
 
-        #get the length if str1. here length is 4 Then use range. 0 to 4. Since we moved last list item have -1.
-        for i in range(len(str1)-1):
-
-            #append each list item.
-            shift.append(str1[i])
-
-        #assign shift to str1. So the for loop is on str1.
-        str1 = shift    
-        j += 1
-    return str1
-
-str1 = [1,2,3,4,5]
-steps = 2
-output = shift_right(str1, steps)
-print (output)
-
-2. Given an array of integer, reverse the array
-   arr = [1,2,3,4,5]
-
-def reverse_array(str1):
-    #initalize null to a string
-    reversed = []  
-
-    #len(str1) will give 5. But we want index range from 0 to 4. so reduce by 1. 
-    #for reverse range use format (start, stop, step). start index at 4. stop at 0. So use -1 for stop and go reverse -1.
-    for i in range(len(str1)-1,-1, -1):
-        reversed.append(str1[i])
-    return reversed
-
-str1 = [1,2,3,4,5]
-output = reverse_array(str1)
-print (output)
+2. Heights/ Depth problems
+Find hight of a binary tree
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
 
 
-3. Given an array of string. Find the index of 'n' occurance.
-   array = ['c','g','e','n','d','s','n','w','q']
+def get_height(root):
+    if root is None:
+        return -1
 
-def find_index(str1, key_value):
-    index = []
-    for i in range(len(str1)):
-        if key_value == str1[i]:
-            index.append(i)
-    return index
+    left_height = get_height(root.left)
+    right_height = get_height(root.right)
 
-
-str1 = ['c','g','e','n','d','s','n','w','q']
-key_value = 'n'
-output = find_index(str1, key_value);
-print (output)
-
-4. Given a string. Find a substring of the string. Also print in upper case. 
-   string = 'Phython'
-   output = 'THO'
-
-string = 'Phython'
-start_value = 3
-stop_value = 6
+    return max(left_height, right_height) + 1
 
 
-output = string[start_value:stop_value+1]
-print (output)
-  
-5. Return the stringfirst character in a string that does not repeat.
-   string = 'swiss'
-   output = 'w'
+root = Node(50)
+root.left = Node(30)
+root.right = Node(70)
 
-def get_unique_str(string):
-    unique = []
-    for i in range(len(string)):
-        print('first string '+string[:i+1])
-        print('second string '+string[i+1:])
+root.left.left = Node(20)
+root.left.right = Node(40)
 
-        #since the last index is not counted, we need to add by 1.
-        if string[:i+1] not in string[i+1:]: 
-            unique = string[i]
-            break
-    return unique
+root.right.left = Node(60)
+root.right.right = Node(80)
 
-string = 'swiss'
-output = get_unique_str(string)
-print (output)
+print("Height of tree :", get_height(root))
+
+Find diameter (longest path between 2 nodes)
+
+3. Binary Search Trees (BST) problems
+
+4. Path/Sum problems
+
+5. Structural transformations
+Mirror a binary tree
+Flatten trees to linked list
+Convert tree to DLL
 
 
-6. Check if a string has balanced parentheses.
-   s =  "(()())"
-   output = True
-   s = "(()"
-   output = False
+6. LCA (Lowest Common Ancestor)
+LCA in binary tree
+LCA in BST
 
-def balanced_parentheses(parentheses):
-    open_bracket = 0
-    closed_bracket = 0
-    for i in range(len(parentheses)):
-        if parentheses[i] == '(':
-            open_bracket += open_bracket+1
-        elif parentheses[i] == ')':
-            closed_bracket += closed_bracket+1      
-    if open_bracket == closed_bracket:
-        return True
+7. Balanced tree checks
+
+8. Serialization / Deserialization
+
+9. BFS / Queue-based problems
+Level-wise printing
+Right view / left view of tree
+
+10. Height of Binary Tree:
+
+def height(root):
+    if root is None:
+        return -1   # HackerRank often uses edges
+    return 1 + max(height(root.left), height(root.right))
+
+11. Insert into BST
+def insert(root, val):
+    if root is None:
+        return Node(val)
+
+    if val < root.data:
+        root.left = insert(root.left, val)
     else:
+        root.right = insert(root.right, val)
+
+    return root
+
+12. Search in BST
+def search(root, target):
+    if root is None:
         return False
 
-parentheses =  "(()))" 
-output = balanced_parentheses(parentheses)
-print (output)
-
-
-return s.count("(") == s.count(")") ? True : False 
-
-
-7. Find the length of the longest substring without repeating characters.
-   s = "abcabcbb"
-   output =  "abc" 
-Check substrings:
-"a" → valid
-"ab" → valid
-"abc" → valid ✅ (best so far = 3)
-"abca" → ❌ repeats a
-restart window
-"bca" → valid
-"cab" → valid
-
-def longest_substring(s):
-    seen = set() #set will store only unique values
-    left = 0
-    max_length = 0
-
-    for right in range(len(s)):
-        # if character is already in the set, remove from left
-        while s[right] in seen:
-            #since the char was added at the end, remove it.
-            seen.remove(s[left])
-            left += 1
-
-        # add new character
-        print('add new character')
-        seen.add(s[right])
-
-        # update longest length
-        current_length = right - left + 1
-        if current_length > max_length:
-            max_length = current_length
-
-    return max_length
-
-
-s = "abcabcbb"
-print(longest_substring(s))
-
-
-8. Given an array, return indices of two numbers that add up to a target.
-   nums = [2, 7, 11, 15]
-   target = 9
-   output = [0, 1]
-
-def get_addition(nums, target):
-    for i in range(len(nums)):
-        for j in range(i+1, len(nums)):# avoid duplicates + self-pairing
-            if nums[i] + nums[j] == target:
-               return [i,j]
-
-nums = [2, 7, 11, 15]
-target = 9
-output = get_addition(nums, target)
-print(output)
-         
-9. Given an array, move all 0s to the end while keeping the order of non-zero elements.
-nums = [0, 1, 0, 3, 12]
-Output = [1, 3, 12, 0, 0]
-
-def move_array(nums):
-    zeros = []
-    values = []
-    for i in range(len(nums)):
-        if nums[i] == 0:
-            zeros.append(nums[i])
-        else:
-            values.append(nums[i])
-    for i in range(len(zeros)):         
-        values.append(zeros[i])
-
-    #instead of above for loop you can have values.extend(zeros)
-    return values
-
-nums = [0, 1, 0, 3, 12]
-output = move_array(nums)
-print(output)
-
-10. Count number of vowels in a string.
-s = "hello world"
-output = 3
-
-def count_vowels(s):
-    vowels = 0
-    for i in range(len(s)):
-        if s[i] in "aeiou":
-            vowels += 1
-    return vowels
-
-s = "hello world"
-output = count_vowels(s)
-print(output)
-
+    if root.data == target:
+        return True
 
-11.Remove duplicates from a list while keeping order.
-nums = [1, 2, 2, 3, 4, 4, 5]
-Output = [1, 2, 3, 4, 5]
+    if target < root.data:
+        return search(root.left, target)
 
-def uniqueness(nums):
-    unique = []
-    for i in range(len(nums)):
-        while nums[i] not in unique:
-            unique.append(nums[i])
-    return unique
+    return search(root.right, target)
 
-nums = [1, 2, 2, 3, 4, 4, 5]
-output = uniqueness(nums)
-print(output)
+13. Level Order Traversal (BFS)
+from collections import deque
 
-12. Check if a string is a palindrome (ignore case).
-s = "Racecar"
-output = True
+def levelOrder(root):
+    if not root:
+        return
 
-def validate(s, reverse_string):
-    for i in range(len(s)):
-        if s[i] != reverse_string[i]:
-            return False
-    return True
+    q = deque([root])
 
+    while q:
+        node = q.popleft()
+        print(node.data, end=' ')
 
-def palindrome(s):
-    reverse_string = ""
-    
-    #len of string gives 7. Since index start from 0, we should do len(s) -1.
-    for i in range(len(s)-1, -1, -1):
-        reverse_string += s[i]
+        if node.left:
+            q.append(node.left)
 
-    #reverse_string = s[::-1]
-    return validate(s, reverse_string)
+        if node.right:
+            q.append(node.right)
 
+Why queue?
+FIFO:
+First node in = first node out.
+That gives level-by-level traversal.
 
-s = "Racecar"
-output = palindrome(s.lower())
-print(output)
+14. Check if Tree Contains value
+def contains(root, x):
+    if not root:
+        return False
 
-13.Given numbers from 0 to n, find the missing one.
-nums = [3, 0, 1]
-Output = 2
+    if root.data == x:
+        return True
 
-def missing_num(nums):
-    i = 0
+    return contains(root.left, x) or contains(root.right, x)
 
-    while i <= len(nums):   # FIX: include last number
-        if i not in nums:
-            return i
-        i += 1
+15. Count Nodes
+def countNodes(root):
+    if not root:
+        return 0
 
+    return 1 + countNodes(root.left) + countNodes(root.right)
 
-nums = [3, 0, 1]
-output = missing_num(nums)
-print(output)
+16. Count Leaves:
+def countLeaves(root):
+    if not root:
+        return 0
 
+    if not root.left and not root.right:
+        return 1
 
-14. Find number of subarrays that sum to target.
-nums = [1, 1, 1]
-target = 2
-Output = 2
+    return countLeaves(root.left) + countLeaves(root.right)
 
-possible sub-quries are:
-[1]
-[1]
-[1]
-[1,1]
-[1,1]
-[1,1,1]
-Because these two subarrays work:
-nums[0:2] = [1,1]
-nums[1:3] = [1,1]
+17. Lowest Common Ancestor (BST)
+def lca(root, v1, v2):
+    if root.data > v1 and root.data > v2:
+        return lca(root.left, v1, v2)
 
-def count_subarrays(nums, target):
-    count = 0
+    if root.data < v1 and root.data < v2:
+        return lca(root.right, v1, v2)
 
-    for i in range(len(nums)):
-        total = 0
-        print (i)
-        for j in range(i, len(nums)):
-            total += nums[j]
-            print(total)
+    return root
 
-            if total == target:
-                count += 1
+18. Validate BST:
+def isBST(root, low=float('-inf'), high=float('inf')):
+    if not root:
+        return True
 
-    return count
+    if not (low < root.data < high):
+        return False
 
+    return (isBST(root.left, low, root.data) and
+            isBST(root.right, root.data, high))
 
-nums = [1,1,1]
-target = 2
+19. Most important Template
+def solve(root):
+    if not root:
+        return base_case
 
-print(count_subarrays(nums,target))
+    left = solve(root.left)
+    right = solve(root.right)
 
+    return combine(left, right, root.data)
 
-15.Find longest substring where you can replace at most k characters to make all same.
-s = "AABABBA"
-k = 1
-The longest substring is AABA. If we change one char to A, it become AAAA
+20. Find sum of all nodes
+def treeSum(root):
+    if not root:
+        return 0
 
-def longest(s, k):
-    #This creates an empty dictionary.
-    count = {}
-    left = 0
-    max_count = 0
-    best = 0
+    return root.data + treeSum(root.left) + treeSum(root.right)
 
-    for right in range(len(s)):
-        #Get the current count of this letter, If it doesn’t exist, use 0
-        #Increase the count of this character by 1
-        #count[s[right]] = count.get(s[right], 0) + 1
-
-        #Above line can also be written as
-        if s[right] not in count:
-            count[s[right]] = 1
-        else:
-            count[s[right]] += 1
-
-        max_count = max(max_count, count[s[right]])
-
-        while (right - left + 1) - max_count > k:
-            count[s[left]] -= 1
-            left += 1
-
-        best = max(best, right - left + 1)
-
-    return best
-
-
-s = "AABABBA"
-k = 1
-print(longest(s, k))
-
-16. Return values instead of indices.
-nums = [2, 7, 11, 15]
-target = 9
-[2, 7]
-
-def sum_values(nums, target):
-
-    for i in range(len(nums)):
-        for j in range(i + 1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
-
-
-nums = [2, 7, 11, 15]
-target = 9
-print(sum_values(nums, target))
-
-17. Get only unique list:
-
-def get_unique_str(string):
-    unique = set(string)
-    return unique
-string = 'swiss'
-output = get_unique_str(string)
-print (output)
-
-
-
-       
-
-
-
-
+Master below 3 
+DFS recursion
+BFS queue
+BST insert/search
