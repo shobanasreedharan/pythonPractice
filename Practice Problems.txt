@@ -1,0 +1,382 @@
+Practice Problems:
+1. Given an array of integer and a number K, rotate the array to the right by K steps.
+   arr = [1,2,3,4,5]
+   K = 2
+
+ Output
+1st step: [5,1,2,3,4]
+2nd step: [4,5,1,2,3]
+expected result: [4,5,1,2,3]
+
+Code:
+
+def shift_right(str1, steps):
+    #J explain how many steps it need to rotate
+    j = 0
+    shift = 0
+    while j < steps:
+
+        #assign last list value to the first
+        shift = [str1[-1]]
+
+        #get the length if str1. here length is 4 Then use range. 0 to 4. Since we moved last list item have -1.
+        for i in range(len(str1)-1):
+
+            #append each list item.
+            shift.append(str1[i])
+
+        #assign shift to str1. So the for loop is on str1.
+        str1 = shift    
+        j += 1
+    return str1
+
+str1 = [1,2,3,4,5]
+steps = 2
+output = shift_right(str1, steps)
+print (output)
+
+2. Given an array of integer, reverse the array
+   arr = [1,2,3,4,5]
+
+def reverse_array(str1):
+    #initalize null to a string
+    reversed = []  
+
+    #len(str1) will give 5. But we want index range from 0 to 4. so reduce by 1. 
+    #for reverse range use format (start, stop, step). start index at 4. stop at 0. So use -1 for stop and go reverse -1.
+    for i in range(len(str1)-1,-1, -1):
+        reversed.append(str1[i])
+    return reversed
+
+str1 = [1,2,3,4,5]
+output = reverse_array(str1)
+print (output)
+
+
+3. Given an array of string. Find the index of 'n' occurance.
+   array = ['c','g','e','n','d','s','n','w','q']
+
+def find_index(str1, key_value):
+    index = []
+    for i in range(len(str1)):
+        if key_value == str1[i]:
+            index.append(i)
+    return index
+
+
+str1 = ['c','g','e','n','d','s','n','w','q']
+key_value = 'n'
+output = find_index(str1, key_value);
+print (output)
+
+4. Given a string. Find a substring of the string. Also print in upper case. 
+   string = 'Phython'
+   output = 'THO'
+
+def get_substring(string,start_value,stop_value):
+    text = string[start_value:stop_value+1]
+    #text.append(last_string)
+    substring = text
+    return substring
+
+string = 'Phython'
+start_value = 3
+stop_value = 6
+output = get_substring(string,start_value,stop_value)
+print (output)
+  
+5. Return the stringfirst character in a string that does not repeat.
+   string = 'swiss'
+   output = 'w'
+
+def get_unique_str(string):
+    unique = []
+    for i in range(len(string)):
+        print('first string '+string[:i+1])
+        print('second string '+string[i+1:])
+
+        #since the last index is not counted, we need to add by 1.
+        if string[:i+1] not in string[i+1:]: 
+            unique = string[i]
+            break
+    return unique
+
+string = 'swiss'
+output = get_unique_str(string)
+print (output)
+
+
+6. Check if a string has balanced parentheses.
+   s =  "(()())"
+   output = True
+   s = "(()"
+   output = False
+
+def balanced_parentheses(parentheses):
+    open_bracket = 0
+    closed_bracket = 0
+    for i in range(len(parentheses)):
+        if parentheses[i] == '(':
+            open_bracket += open_bracket+1
+        elif parentheses[i] == ')':
+            closed_bracket += closed_bracket+1      
+    if open_bracket == closed_bracket:
+        return True
+    else:
+        return False
+
+parentheses =  "(()))" 
+output = balanced_parentheses(parentheses)
+print (output)
+
+
+7. Find the length of the longest substring without repeating characters.
+   s = "abcabcbb"
+   output =  "abc" 
+Check substrings:
+"a" → valid
+"ab" → valid
+"abc" → valid ✅ (best so far = 3)
+"abca" → ❌ repeats a
+restart window
+"bca" → valid
+"cab" → valid
+
+def longest_substring(s):
+    seen = set() #set will store only unique values
+    left = 0
+    max_length = 0
+
+    for right in range(len(s)):
+        # if character is already in the set, remove from left
+        while s[right] in seen:
+            #since the char was added at the end, remove it.
+            seen.remove(s[left])
+            left += 1
+
+        # add new character
+        print('add new character')
+        seen.add(s[right])
+
+        # update longest length
+        current_length = right - left + 1
+        if current_length > max_length:
+            max_length = current_length
+
+    return max_length
+
+
+s = "abcabcbb"
+print(longest_substring(s))
+
+
+8. Given an array, return indices of two numbers that add up to a target.
+   nums = [2, 7, 11, 15]
+   target = 9
+   output = [0, 1]
+
+def get_addition(nums, target):
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):# avoid duplicates + self-pairing
+            if nums[i] + nums[j] == target:
+               return [i,j]
+
+nums = [2, 7, 11, 15]
+target = 9
+output = get_addition(nums, target)
+print(output)
+         
+9. Given an array, move all 0s to the end while keeping the order of non-zero elements.
+nums = [0, 1, 0, 3, 12]
+Output = [1, 3, 12, 0, 0]
+
+def move_array(nums):
+    zeros = []
+    values = []
+    for i in range(len(nums)):
+        if nums[i] == 0:
+            zeros.append(nums[i])
+        else:
+            values.append(nums[i])
+    for i in range(len(zeros)):         
+        values.append(zeros[i])
+
+    #instead of above for loop you can have values.extend(zeros)
+    return values
+
+nums = [0, 1, 0, 3, 12]
+output = move_array(nums)
+print(output)
+
+10. Count number of vowels in a string.
+s = "hello world"
+output = 3
+
+def count_vowels(s):
+    vowels = 0
+    for i in range(len(s)):
+        if s[i] in "aeiou":
+            vowels += 1
+    return vowels
+
+s = "hello world"
+output = count_vowels(s)
+print(output)
+
+
+11.Remove duplicates from a list while keeping order.
+nums = [1, 2, 2, 3, 4, 4, 5]
+Output = [1, 2, 3, 4, 5]
+
+def uniqueness(nums):
+    unique = []
+    for i in range(len(nums)):
+        while nums[i] not in unique:
+            unique.append(nums[i])
+    return unique
+
+nums = [1, 2, 2, 3, 4, 4, 5]
+output = uniqueness(nums)
+print(output)
+
+12. Check if a string is a palindrome (ignore case).
+s = "Racecar"
+output = True
+
+def validate(s, reverse_string):
+    for i in range(len(s)):
+        if s[i] != reverse_string[i]:
+            return False
+    return True
+
+
+def palindrome(s):
+    reverse_string = ""
+
+    for i in range(len(s)-1, -1, -1):
+        reverse_string += s[i]
+
+    return validate(s, reverse_string)
+
+
+s = "Racecar"
+output = palindrome(s.lower())
+print(output)
+
+13.Given numbers from 0 to n, find the missing one.
+nums = [3, 0, 1]
+Output = 2
+
+def missing_num(nums):
+    i = 0
+
+    while i <= len(nums):   # FIX: include last number
+        if i not in nums:
+            return i
+        i += 1
+
+
+nums = [3, 0, 1]
+output = missing_num(nums)
+print(output)
+
+
+14. Find number of subarrays that sum to target.
+nums = [1, 1, 1]
+target = 2
+Output = 2
+
+possible sub-quries are:
+[1]
+[1]
+[1]
+[1,1]
+[1,1]
+[1,1,1]
+Because these two subarrays work:
+nums[0:2] = [1,1]
+nums[1:3] = [1,1]
+
+def count_subarrays(nums, target):
+    count = 0
+
+    for i in range(len(nums)):
+        total = 0
+        print (i)
+        for j in range(i, len(nums)):
+            total += nums[j]
+            print(total)
+
+            if total == target:
+                count += 1
+
+    return count
+
+
+nums = [1,1,1]
+target = 2
+
+print(count_subarrays(nums,target))
+
+
+15.Find longest substring where you can replace at most k characters to make all same.
+s = "AABABBA"
+k = 1
+The longest substring is AABA. If we change one char to A, it become AAAA
+
+def longest(s, k):
+    #This creates an empty dictionary.
+    count = {}
+    left = 0
+    max_count = 0
+    best = 0
+
+    for right in range(len(s)):
+        #Get the current count of this letter, If it doesn’t exist, use 0
+        #Increase the count of this character by 1
+        #count[s[right]] = count.get(s[right], 0) + 1
+
+        #Above line can also be written as
+        if s[right] not in count:
+            count[s[right]] = 1
+        else:
+            count[s[right]] += 1
+
+        max_count = max(max_count, count[s[right]])
+
+        while (right - left + 1) - max_count > k:
+            count[s[left]] -= 1
+            left += 1
+
+        best = max(best, right - left + 1)
+
+    return best
+
+
+s = "AABABBA"
+k = 1
+print(longest(s, k))
+
+16. Return values instead of indices.
+nums = [2, 7, 11, 15]
+target = 9
+[2, 7]
+
+def sum_values(nums, target):
+
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+
+
+nums = [2, 7, 11, 15]
+target = 9
+print(sum_values(nums, target))
+
+
+       
+
+
+
+
