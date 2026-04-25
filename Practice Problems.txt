@@ -374,6 +374,16 @@ nums = [2, 7, 11, 15]
 target = 9
 print(sum_values(nums, target))
 
+17. Get only unique list:
+
+def get_unique_str(string):
+    unique = set(string)
+    return unique
+string = 'swiss'
+output = get_unique_str(string)
+print (output)
+
+
 
        
 
